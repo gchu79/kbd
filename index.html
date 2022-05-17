@@ -48,6 +48,7 @@
         .key0 {
             top: 10px;
             height: 10%;
+            line-height: 41px;            
             width: 50px;
             float: left;
             position: relative;
@@ -63,6 +64,7 @@
 
         .key0a {
             top: 10px;
+            line-height: 41px;            
             height: 10%;
             width: 50px;
             float: left;
@@ -80,6 +82,7 @@
         .key1 {
             top: 20px;
             height: 10%;
+            line-height: 41px;            
             width: 50px;
             float: left;
             position: relative;
@@ -96,6 +99,7 @@
         .key2 {
             top: 20px;
             height: 10%;
+            line-height: 41px;
             width: 50px;
             float: left;
             position: relative;
@@ -112,6 +116,7 @@
         .key3 {
             top: 30px;
             height: 10%;
+            line-height: 41px;
             width: 102px;
             float: left;
             position: relative;
@@ -122,12 +127,13 @@
 
             text-align: center;
 
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .key4 {
             top: 30px;
             height: 10%;
+            line-height: 41px;            
             width: 102px;
             float: left;
             position: relative;
@@ -138,16 +144,17 @@
 
             text-align: center;
 
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .key5 {
             top: 50px;
             height: 10%;
+            line-height: 41px;            
             width: 102px;
             float: left;
             position: relative;
-            background: yellow;
+            background: #dbd0d0;
             overflow: visible;
 
             border: 1px solid black;
@@ -156,6 +163,21 @@
 
             font-size: 20px;
         }
+        
+        .key6 {
+            top: 50px;
+            height: 10%;
+            line-height: 41px;            
+            width: 102px;
+            float: left;
+            position: relative;
+            background: white;
+            overflow: visible;
+
+            text-align: center;
+
+            font-size: 20px;
+        }        
 
         #container {
             position: absolute;
@@ -197,6 +219,7 @@
         var scaleNaturalMinor = [0, 2, 3, 5, 7, 8, 10, 12];
         var scaleMelodicMinor = [0, 2, 3, 5, 7, 9, 11, 12];
         var scaleHarmonicMinor = [0, 2, 3, 5, 7, 8, 11, 12];
+        var Interval = ['Unison', 'Major 2nd', 'Minor 3rd', 'Perfect 4th', 'Perfect 5th', 'Minor 6th', 'Minor 7th'];        
         var html = "";
         var html1 = "";
 
@@ -253,12 +276,19 @@
 
         }
 
-        html1 += `<div class='key4' id='selected2'></div>`
+        html1 += `<div class='key4' id='selected2'></div>`;
 
-        for (var i = 0; i < 1; i++) {
+
+        for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 7; j++) {
-                html1 += `<div class='key5' id=${i}${j}   ></div>`
+                html1 += `<div class='key5' id=${i}${j}></div>`;
             }
+        }
+        
+
+        for (var i = 0; i < 7; i++) {
+            var int = Interval[i];
+            html1 += `<div class='key6'>${int}</div>`;
         }
 
         document.getElementById('container2').innerHTML = html1;
@@ -273,8 +303,6 @@
 
         function keyDown(elem) {
             var ky = document.getElementById(elem.dataset.key).innerHTML;
-
-            /*            if ((ky == "C") || (ky == "D")|| (ky == "E") || (ky == "F") || (ky == "G") || (ky == "A") || (ky = "B"))  { */
 
             document.getElementById('selected').innerHTML = ky;
 
@@ -310,14 +338,11 @@
             var ky1 = elem.dataset.key1;
 
             document.getElementById('selected2').innerHTML = ky1;
-
-    
-            
+        
     /*            document.getElementById(document.getElementById('01').innerHTML + '4').style.background = "red";  */
             
             buildChord();
                        
-
         }
 
         
@@ -333,7 +358,7 @@
             }
 
             for (var i = 0; i < 1; i++) {
-                for (var j = 0; j < 8; j++) {
+                for (var j = 0; j < 7; j++) {
 
                     varGrid = '' + i + j;
 
@@ -378,13 +403,37 @@
 
                         document.getElementById(varGrid).innerHTML = keyf[scaleOffSet];
                     }
-                }
-                
-
-                
+                }  
             }
             
+            for (var i = 1; i < 3; i++) {
+                for (var j = 0; j < 7; j++) {
+            
+                varGrid = '' + i + j;
+
+                if (i==1) {
+                    x = 0;
+                    y = j + 2;
+                    if (y > 6) {
+                        y = y - 7;
+                    }
+                    varSource = "" + x + y;
+                }
  
+                if (i==2) {
+                    x = 0;
+                    y = j + 4;
+                    if (y > 6) {
+                        y = y - 7;
+                    }
+                    varSource = "" + x + y;
+                }                    
+                    
+                document.getElementById(varGrid).innerHTML = document.getElementById(varSource).innerHTML;
+            
+                }
+            }
+            
 
         }
 
