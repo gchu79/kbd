@@ -450,9 +450,7 @@
         function keyIntDown(elem) {
             var int = elem.dataset.int;
             varInt = Interval.indexOf(int);
-            
-            /* calculate 4 or 5 */
-            
+                        
             Grid1 = '' + 0 + varInt
             Grid2 = '' + 1 + varInt
             Grid3 = '' + 2 + varInt
@@ -467,9 +465,23 @@
                 Note3 = keys[keyf.indexOf(Note3)];
             }
             
+            A1 = Note1.substr(0,1).codePointAt(0);
+            A2 = Note2.substr(0,1).codePointAt(0);
+            A3 = Note3.substr(0,1).codePointAt(0);
+            
             Note1 = Note1 + 4;
-            Note2 = Note2 + 4;
-            Note3 = Note3 + 4;
+                        
+            if (Number(A1) > 64 && Number(A1) < 67 && Number(A2) > 66) {
+                Note2 = Note2 + 5;
+            } else {
+                Note2 = Note2 + 4;
+            }
+            
+            if ((Number(A1) > 69 || Number(A1) < 67) && Number(A3) > 66 && Number(A3) < 71) {
+                Note3 = Note3 + 5;
+            } else {
+                Note3 = Note3 + 4;
+            }
             
             document.getElementById(Note1).style.background = "red";
             document.getElementById(Note2).style.background = "red";
@@ -495,7 +507,7 @@
             document.getElementById("D#5").style.background = '#777';
             document.getElementById("F#5").style.background = '#777';
             document.getElementById("G#5").style.background = '#777';
-            document.getElementById("a#5").style.background = '#777';
+            document.getElementById("A#5").style.background = '#777';
             
         }
              
