@@ -191,7 +191,7 @@
         #container2 {
             position: absolute;
             top: 270px;
-            width: 728px;
+            width: 738px;
             left: calc(50% - 400px);
             border: 5px solid black;
 
@@ -219,7 +219,8 @@
         var scaleNaturalMinor = [0, 2, 3, 5, 7, 8, 10, 12];
         var scaleMelodicMinor = [0, 2, 3, 5, 7, 9, 11, 12];
         var scaleHarmonicMinor = [0, 2, 3, 5, 7, 8, 11, 12];
-        var Interval = ['Unison', 'Major 2nd', 'Minor 3rd', 'Perfect 4th', 'Perfect 5th', 'Minor 6th', 'Minor 7th'];        
+        var Interval = ['Unison', 'Major 2nd', 'Minor 3rd', 'Perfect 4th', 'Perfect 5th', 'Minor 6th', 'Minor 7th'];  
+        var blackkey = ['C#', 'Db', 'D#', 'Eb', 'F#', 'Gb', 'G#', 'Ab', 'A#', 'Bb'];
         var html = "";
         var html1 = "";
 
@@ -286,9 +287,11 @@
         }
         
 
+/* interval */
+        
         for (var i = 0; i < 7; i++) {
             var int = Interval[i];
-            html1 += `<div class='key6'>${int}</div>`;
+            html1 += `<div class='key6' id=${int} onmousedown='keyIntDown(this)' onmouseup='keyIntUp(this)' onmouseleave='keyIntUp(this)' data-int='${int}'>${int}</div>`;
         }
 
         document.getElementById('container2').innerHTML = html1;
@@ -338,11 +341,8 @@
             var ky1 = elem.dataset.key1;
 
             document.getElementById('selected2').innerHTML = ky1;
-        
-    /*            document.getElementById(document.getElementById('01').innerHTML + '4').style.background = "red";  */
-            
-            buildChord();
-                       
+                
+            buildChord();      
         }
 
         
@@ -446,6 +446,59 @@
                 
         }
 
+        
+        function keyIntDown(elem) {
+            var int = elem.dataset.int;
+            varInt = Interval.indexOf(int);
+            
+            /* calculate 4 or 5 */
+            
+            Grid1 = '' + 0 + varInt
+            Grid2 = '' + 1 + varInt
+            Grid3 = '' + 2 + varInt
+            
+            Note1 = document.getElementById(Grid1).innerHTML;
+            Note2 = document.getElementById(Grid2).innerHTML;
+            Note3 = document.getElementById(Grid3).innerHTML;
+
+            if (document.getElementById('keyselected').innerHTML == "b") {
+                Note1 = keys[keyf.indexOf(Note1)];
+                Note2 = keys[keyf.indexOf(Note2)];
+                Note3 = keys[keyf.indexOf(Note3)];
+            }
+            
+            Note1 = Note1 + 4;
+            Note2 = Note2 + 4;
+            Note3 = Note3 + 4;
+            
+            document.getElementById(Note1).style.background = "red";
+            document.getElementById(Note2).style.background = "red";
+            document.getElementById(Note3).style.background = "red";
+                        
+        }
+        
+        function keyIntUp(elem) {
+            
+            for (var i = 0; i < 7; i++) {
+                whiteNote = data[i] + 4;
+                document.getElementById(whiteNote).style.background = "white";
+                whiteNote = data[i] + 5;
+                document.getElementById(whiteNote).style.background = "white";
+            }
+             
+            document.getElementById("C#4").style.background = '#777';
+            document.getElementById("D#4").style.background = '#777';
+            document.getElementById("F#4").style.background = '#777';
+            document.getElementById("G#4").style.background = '#777';
+            document.getElementById("A#4").style.background = '#777';
+            document.getElementById("C#5").style.background = '#777';
+            document.getElementById("D#5").style.background = '#777';
+            document.getElementById("F#5").style.background = '#777';
+            document.getElementById("G#5").style.background = '#777';
+            document.getElementById("a#5").style.background = '#777';
+            
+        }
+             
     </script>
 
 </body>
