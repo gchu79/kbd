@@ -199,7 +199,7 @@
         .key7 {
             top: 50px;
             height: 5%;
-            width: 625px;
+            width: 520px;
             float: left;
             position: relative;
             background: white;
@@ -226,6 +226,23 @@
 
             font-size: 20px;
         }
+        
+        .key8a {
+            top: 50px;
+            height: 8%;
+            line-height: 35px;
+            width: 102px;
+            float: left;
+            position: relative;
+            background: white;
+            overflow: visible;
+
+            border: 1px solid black;
+
+            text-align: center;
+
+            font-size: 15px;
+        }        
 
         #container {
             position: absolute;
@@ -239,7 +256,7 @@
         #container2 {
             position: absolute;
             top: 270px;
-            width: 738px;
+            width: 730px;
             left: calc(50% - 400px);
             border: 5px solid black;
 
@@ -351,12 +368,14 @@
 
         for (var i = 0; i < 7; i++) {
             var int = Interval[i];
-            html1 += `<div class='key6' id=${int} onmousedown='keyIntDown(this)'  data-int='${int}'>${int}</div>`;
+            html1 += `<div class='key6' id=${int} onmousedown='keyIntDown(this)' onmouseup='keyIntUp(this)' data-int='${int}'>${int}</div>`;
         }
 
+        html1 += `<div class='key8a' id='toggle' onmousedown='keyToggle(this)'>Touch Screen</div>`;
+        
         html1 += `<div class='key7'>Major & Minor Chord</div>`
 
-        html1 += `<div class='key8' id='clear' onmousedown='keyIntUp(this)'>Clear</div>`;
+        html1 += `<div class='key8' id='clear' onmousedown='keyIntUpClear(this)'>Clear</div>`;
 
 
         document.getElementById('container2').innerHTML = html1;
@@ -541,20 +560,26 @@
             A2 = Note2.substr(0, 1).codePointAt(0);
             A3 = Note3.substr(0, 1).codePointAt(0);
 
-            Note1 = Note1 + 4;
-
-            if (Number(A1) > 64 && Number(A1) < 67 && Number(A2) > 66) {
+/* need fine tuning */
+            
+            P1 = keys.indexOf(Note1);
+            P2 = keys.indexOf(Note2);
+            P3 = keys.indexOf(Note3);
+            
+            if (P2 < P1) {
                 Note2 = Note2 + 5;
             } else {
                 Note2 = Note2 + 4;
             }
 
-            if ((Number(A1) > 69 || Number(A1) < 67) && Number(A3) > 66 && Number(A3) < 71) {
+            if (P3 < P1) {
                 Note3 = Note3 + 5;
             } else {
                 Note3 = Note3 + 4;
             }
 
+            Note1 = Note1 + 4;
+            
             document.getElementById(Note1).style.background = "red";
             document.getElementById(Note2).style.background = "red";
             document.getElementById(Note3).style.background = "red";
@@ -566,26 +591,63 @@
 
         function keyIntUp(elem) {
 
-            for (var i = 0; i < 7; i++) {
-                whiteNote = data[i] + 4;
-                document.getElementById(whiteNote).style.background = "white";
-                whiteNote = data[i] + 5;
-                document.getElementById(whiteNote).style.background = "white";
+            if (document.getElementById('toggle').innerHTML == "Mouse Click") {
+                for (var i = 0; i < 7; i++) {
+                    whiteNote = data[i] + 4;
+                    document.getElementById(whiteNote).style.background = "white";
+                    whiteNote = data[i] + 5;
+                    document.getElementById(whiteNote).style.background = "white";
+                }
+
+                document.getElementById("C#4").style.background = '#777';
+                document.getElementById("D#4").style.background = '#777';
+                document.getElementById("F#4").style.background = '#777';
+                document.getElementById("G#4").style.background = '#777';
+                document.getElementById("A#4").style.background = '#777';
+                document.getElementById("C#5").style.background = '#777';
+                document.getElementById("D#5").style.background = '#777';
+                document.getElementById("F#5").style.background = '#777';
+                document.getElementById("G#5").style.background = '#777';
+                document.getElementById("A#5").style.background = '#777';
             }
-
-            document.getElementById("C#4").style.background = '#777';
-            document.getElementById("D#4").style.background = '#777';
-            document.getElementById("F#4").style.background = '#777';
-            document.getElementById("G#4").style.background = '#777';
-            document.getElementById("A#4").style.background = '#777';
-            document.getElementById("C#5").style.background = '#777';
-            document.getElementById("D#5").style.background = '#777';
-            document.getElementById("F#5").style.background = '#777';
-            document.getElementById("G#5").style.background = '#777';
-            document.getElementById("A#5").style.background = '#777';
-
         }
-/* add a toggle button for ipad - to clear */
+        
+        function keyIntUpClear (elem) {
+
+            if (document.getElementById('toggle').innerHTML == "Touch Screen") {
+                
+                for (var i = 0; i < 7; i++) {
+                    whiteNote = data[i] + 4;
+                    document.getElementById(whiteNote).style.background = "white";
+                    whiteNote = data[i] + 5;
+                    document.getElementById(whiteNote).style.background = "white";
+                }
+
+                document.getElementById("C#4").style.background = '#777';
+                document.getElementById("D#4").style.background = '#777';
+                document.getElementById("F#4").style.background = '#777';
+                document.getElementById("G#4").style.background = '#777';
+                document.getElementById("A#4").style.background = '#777';
+                document.getElementById("C#5").style.background = '#777';
+                document.getElementById("D#5").style.background = '#777';
+                document.getElementById("F#5").style.background = '#777';
+                document.getElementById("G#5").style.background = '#777';
+                document.getElementById("A#5").style.background = '#777';
+            }
+        }        
+        
+        function keyToggle(elem) {
+                    
+            if (document.getElementById('toggle').innerHTML == "Touch Screen") {
+                document.getElementById('toggle').innerHTML = "Mouse Click";
+                document.getElementById('clear').style.visibility = 'hidden';
+            } else {
+                document.getElementById('toggle').innerHTML = "Touch Screen";
+                document.getElementById('clear').style.visibility = 'visible';
+            }
+            
+            
+        }
         
     </script>
 
