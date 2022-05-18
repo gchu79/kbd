@@ -157,7 +157,7 @@
             background: #dbd0d0;
             overflow: visible;
 
-            border: 1px solid black;
+            border: 1px dotted black;
 
             text-align: center;
 
@@ -370,6 +370,8 @@
             var int = Interval[i];
             html1 += `<div class='key6' id=${int} onmousedown='keyIntDown(this)' onmouseup='keyIntUp(this)' data-int='${int}'>${int}</div>`;
         }
+        
+/* bottom buttons and titles */        
 
         html1 += `<div class='key8a' id='toggle' onmousedown='keyToggle(this)'>Touch Screen</div>`;
         
@@ -410,8 +412,22 @@
                 document.getElementById('F#').innerHTML = "F#";
                 document.getElementById('G#').innerHTML = "G#";
                 document.getElementById('A#').innerHTML = "A#";
-                
-                /* update selected b to # */
+                            
+                if (document.getElementById('selected').innerHTML == "Db") {
+                    document.getElementById('selected').innerHTML = "C#"
+                    }
+                if (document.getElementById('selected').innerHTML == "Eb") {
+                    document.getElementById('selected').innerHTML = "D#"
+                    }
+                if (document.getElementById('selected').innerHTML == "Gb") {
+                    document.getElementById('selected').innerHTML = "F#"
+                    }
+                if (document.getElementById('selected').innerHTML == "Ab") {
+                    document.getElementById('selected').innerHTML = "G#"
+                    }
+                if (document.getElementById('selected').innerHTML == "Bb") {
+                    document.getElementById('selected').innerHTML = "A#"
+                    }
                 
             } else {
                 document.getElementById('C#').innerHTML = "Db";
@@ -420,13 +436,26 @@
                 document.getElementById('G#').innerHTML = "Ab";
                 document.getElementById('A#').innerHTML = "Bb";
                 
-                /* update selected # to b */
+                if (document.getElementById('selected').innerHTML == "C#") {
+                    document.getElementById('selected').innerHTML = "Db"
+                    }
+                if (document.getElementById('selected').innerHTML == "D#") {
+                    document.getElementById('selected').innerHTML = "Eb"
+                    }
+                if (document.getElementById('selected').innerHTML == "F#") {
+                    document.getElementById('selected').innerHTML = "Gb"
+                    }
+                if (document.getElementById('selected').innerHTML == "G#") {
+                    document.getElementById('selected').innerHTML = "Ab"
+                    }
+                if (document.getElementById('selected').innerHTML == "A#") {
+                    document.getElementById('selected').innerHTML = "Bb"
+                    }
             }
             
             buildChord();
 
         }
-
 
         function key1Down(elem) {
             var ky1 = elem.dataset.key1;
@@ -559,8 +588,6 @@
             A1 = Note1.substr(0, 1).codePointAt(0);
             A2 = Note2.substr(0, 1).codePointAt(0);
             A3 = Note3.substr(0, 1).codePointAt(0);
-
-/* need fine tuning */
             
             P1 = keys.indexOf(Note1);
             P2 = keys.indexOf(Note2);
