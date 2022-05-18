@@ -164,6 +164,23 @@
             font-size: 20px;
         }
 
+        .key5a {
+            top: 50px;
+            height: 10%;
+            line-height: 41px;
+            width: 102px;
+            float: left;
+            position: relative;
+            background: #dbd0d0;
+            overflow: visible;
+
+            border: 1px solid black;
+
+            text-align: center;
+            color: red;
+            font-size: 20px;
+        }
+
         .key6 {
             top: 50px;
             height: 10%;
@@ -317,14 +334,20 @@
         html1 += `<div class='key4' id='selected2'></div>`;
 
 
+/* chord section */
+        
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 7; j++) {
-                html1 += `<div class='key5' id=${i}${j}></div>`;
+                if (i == 0) {
+                    html1 += `<div class='key5a' id=${i}${j}></div>`;
+                } else {
+                    html1 += `<div class='key5' id=${i}${j}></div>`;
+                }
             }
         }
 
 
-        /* interval */
+/* interval names */
 
         for (var i = 0; i < 7; i++) {
             var int = Interval[i];
@@ -341,6 +364,8 @@
         document.getElementById('selected').innerHTML = "C";
         document.getElementById('selected2').innerHTML = "Major";
 
+/* function section */
+        
         function noteUp(elem, isSharp) {
             elem.style.background = isSharp ? '#777' : '';
 
@@ -560,11 +585,14 @@
             document.getElementById("A#5").style.background = '#777';
 
         }
-
+/* add a toggle button for ipad - to clear */
+        
     </script>
 
 </body>
 
-/* add a toggle button for ipad - to clear */
+<footer>
+<br />Play the keyboard or Select Key to generate the chord structure. Click on 'Unison' row to see/listen to the chord. 05/18/2022 Rev A. 
+</footer>
 
 </html>
