@@ -48,7 +48,7 @@
         .key0 {
             top: 10px;
             height: 10%;
-            line-height: 41px;            
+            line-height: 41px;
             width: 50px;
             float: left;
             position: relative;
@@ -64,7 +64,7 @@
 
         .key0a {
             top: 10px;
-            line-height: 41px;            
+            line-height: 41px;
             height: 10%;
             width: 50px;
             float: left;
@@ -82,7 +82,7 @@
         .key1 {
             top: 20px;
             height: 10%;
-            line-height: 41px;            
+            line-height: 41px;
             width: 50px;
             float: left;
             position: relative;
@@ -133,7 +133,7 @@
         .key4 {
             top: 30px;
             height: 10%;
-            line-height: 41px;            
+            line-height: 41px;
             width: 102px;
             float: left;
             position: relative;
@@ -150,7 +150,7 @@
         .key5 {
             top: 50px;
             height: 10%;
-            line-height: 41px;            
+            line-height: 41px;
             width: 102px;
             float: left;
             position: relative;
@@ -163,11 +163,11 @@
 
             font-size: 20px;
         }
-        
+
         .key6 {
             top: 50px;
             height: 10%;
-            line-height: 41px;            
+            line-height: 41px;
             width: 102px;
             float: left;
             position: relative;
@@ -177,11 +177,11 @@
             text-align: center;
 
             font-size: 20px;
-        }  
-        
+        }
+
         .key7 {
             top: 50px;
-            height: 5%;       
+            height: 5%;
             width: 625px;
             float: left;
             position: relative;
@@ -191,12 +191,12 @@
             text-align: center;
             color: red;
             font-size: 30px;
-        } 
-        
+        }
+
         .key8 {
             top: 50px;
             height: 8%;
-            line-height: 35px;            
+            line-height: 35px;
             width: 102px;
             float: left;
             position: relative;
@@ -208,7 +208,7 @@
             text-align: center;
 
             font-size: 20px;
-        }        
+        }
 
         #container {
             position: absolute;
@@ -235,9 +235,11 @@
 
 <body>
 
-    <div id='container'>
+    <div id='container'> /* keyboard container */
     </div>
-    <div id='container2'></div>
+
+    <div id='container2'> /* chord container */
+    </div>
 
     <script>
         const synth = new Tone.PolySynth().toDestination();
@@ -250,11 +252,12 @@
         var scaleNaturalMinor = [0, 2, 3, 5, 7, 8, 10, 12];
         var scaleMelodicMinor = [0, 2, 3, 5, 7, 9, 11, 12];
         var scaleHarmonicMinor = [0, 2, 3, 5, 7, 8, 11, 12];
-        var Interval = ['Unison', 'Major 2nd', 'Minor 3rd', 'Perfect 4th', 'Perfect 5th', 'Minor 6th', 'Minor 7th'];  
+        var Interval = ['Unison', 'Major 2nd', 'Minor 3rd', 'Perfect 4th', 'Perfect 5th', 'Minor 6th', 'Minor 7th'];
         var blackkey = ['C#', 'Db', 'D#', 'Eb', 'F#', 'Gb', 'G#', 'Ab', 'A#', 'Bb'];
         var html = "";
         var html1 = "";
 
+        /* create keyboard */
 
         for (var octave = 0; octave < 2; octave++) {
             for (var i = 0; i < data.length; i++) {
@@ -275,8 +278,12 @@
         }
 
         document.getElementById('container').innerHTML = html;
+        
+        /* create chord */
 
         html1 += "<div>Select Key</div>";
+        
+        /* #, b selection */
 
         for (var i = 0; i < 13; i++) {
             var key0 = keysf[i];
@@ -287,18 +294,17 @@
 
         html1 += `<div class='key0a' id='keyselected'>#</div>`
 
+        /* C C# D D#.. selection */
 
         for (var i = 0; i < 12; i++) {
             var key1 = keys[i];
 
             html1 += `<div class='key1' id=${key1} onmousedown='keyDown(this)' data-key='${key1}'>${key1}</div>`
-            /* how to switch between # and b */
-        }
 
+        }
 
         html1 += `<div class='key1'></div>`
         html1 += `<div class='key2' id='selected'></div>`
-
 
 
         for (var i = 0; i < 6; i++) {
@@ -316,20 +322,20 @@
                 html1 += `<div class='key5' id=${i}${j}></div>`;
             }
         }
-        
 
-/* interval */
-        
+
+        /* interval */
+
         for (var i = 0; i < 7; i++) {
             var int = Interval[i];
             html1 += `<div class='key6' id=${int} onmousedown='keyIntDown(this)'  data-int='${int}'>${int}</div>`;
         }
 
         html1 += `<div class='key7'>Major & Minor Chord</div>`
-        
+
         html1 += `<div class='key8' id='clear' onmousedown='keyIntUp(this)'>Clear</div>`;
-        
-        
+
+
         document.getElementById('container2').innerHTML = html1;
 
         document.getElementById('selected').innerHTML = "C";
@@ -360,16 +366,21 @@
                 document.getElementById('F#').innerHTML = "F#";
                 document.getElementById('G#').innerHTML = "G#";
                 document.getElementById('A#').innerHTML = "A#";
+                
+                /* update selected b to # */
+                
             } else {
                 document.getElementById('C#').innerHTML = "Db";
                 document.getElementById('D#').innerHTML = "Eb";
                 document.getElementById('F#').innerHTML = "Gb";
                 document.getElementById('G#').innerHTML = "Ab";
                 document.getElementById('A#').innerHTML = "Bb";
+                
+                /* update selected # to b */
             }
-
+            
             buildChord();
-                        
+
         }
 
 
@@ -377,11 +388,11 @@
             var ky1 = elem.dataset.key1;
 
             document.getElementById('selected2').innerHTML = ky1;
-                
-            buildChord();      
+
+            buildChord();
         }
 
-        
+
         function buildChord() {
             varScale = document.getElementById('keyselected').innerHTML; /* b */
             varKey = document.getElementById('selected').innerHTML; /* Eb */
@@ -439,37 +450,37 @@
 
                         document.getElementById(varGrid).innerHTML = keyf[scaleOffSet];
                     }
-                }  
+                }
             }
-            
+
             for (var i = 1; i < 3; i++) {
                 for (var j = 0; j < 7; j++) {
-            
-                varGrid = '' + i + j;
 
-                if (i==1) {
-                    x = 0;
-                    y = j + 2;
-                    if (y > 6) {
-                        y = y - 7;
+                    varGrid = '' + i + j;
+
+                    if (i == 1) {
+                        x = 0;
+                        y = j + 2;
+                        if (y > 6) {
+                            y = y - 7;
+                        }
+                        varSource = "" + x + y;
                     }
-                    varSource = "" + x + y;
-                }
- 
-                if (i==2) {
-                    x = 0;
-                    y = j + 4;
-                    if (y > 6) {
-                        y = y - 7;
+
+                    if (i == 2) {
+                        x = 0;
+                        y = j + 4;
+                        if (y > 6) {
+                            y = y - 7;
+                        }
+                        varSource = "" + x + y;
                     }
-                    varSource = "" + x + y;
-                }                    
-                    
-                document.getElementById(varGrid).innerHTML = document.getElementById(varSource).innerHTML;
-            
+
+                    document.getElementById(varGrid).innerHTML = document.getElementById(varSource).innerHTML;
+
                 }
             }
-            
+
 
         }
 
@@ -478,19 +489,19 @@
 
             elem.style.background = isSharp ? 'black' : '#ccc';
             synth.triggerAttackRelease(note, "16n");
-            event.stopPropagation(); 
-                
+            event.stopPropagation();
+
         }
 
-        
+
         function keyIntDown(elem) {
             var int = elem.dataset.int;
             varInt = Interval.indexOf(int);
-                        
+
             Grid1 = '' + 0 + varInt
             Grid2 = '' + 1 + varInt
             Grid3 = '' + 2 + varInt
-            
+
             Note1 = document.getElementById(Grid1).innerHTML;
             Note2 = document.getElementById(Grid2).innerHTML;
             Note3 = document.getElementById(Grid3).innerHTML;
@@ -500,40 +511,43 @@
                 Note2 = keys[keyf.indexOf(Note2)];
                 Note3 = keys[keyf.indexOf(Note3)];
             }
-            
-            A1 = Note1.substr(0,1).codePointAt(0);
-            A2 = Note2.substr(0,1).codePointAt(0);
-            A3 = Note3.substr(0,1).codePointAt(0);
-            
+
+            A1 = Note1.substr(0, 1).codePointAt(0);
+            A2 = Note2.substr(0, 1).codePointAt(0);
+            A3 = Note3.substr(0, 1).codePointAt(0);
+
             Note1 = Note1 + 4;
-                        
+
             if (Number(A1) > 64 && Number(A1) < 67 && Number(A2) > 66) {
                 Note2 = Note2 + 5;
             } else {
                 Note2 = Note2 + 4;
             }
-            
+
             if ((Number(A1) > 69 || Number(A1) < 67) && Number(A3) > 66 && Number(A3) < 71) {
                 Note3 = Note3 + 5;
             } else {
                 Note3 = Note3 + 4;
             }
-            
+
             document.getElementById(Note1).style.background = "red";
             document.getElementById(Note2).style.background = "red";
             document.getElementById(Note3).style.background = "red";
-                        
-        }
-        
-        function keyIntUp(elem) {
+
+            synth.triggerAttackRelease([Note1,Note2,Note3], "16n");
+            event.stopPropagation();
             
+        }
+
+        function keyIntUp(elem) {
+
             for (var i = 0; i < 7; i++) {
                 whiteNote = data[i] + 4;
                 document.getElementById(whiteNote).style.background = "white";
                 whiteNote = data[i] + 5;
                 document.getElementById(whiteNote).style.background = "white";
             }
-             
+
             document.getElementById("C#4").style.background = '#777';
             document.getElementById("D#4").style.background = '#777';
             document.getElementById("F#4").style.background = '#777';
@@ -544,11 +558,13 @@
             document.getElementById("F#5").style.background = '#777';
             document.getElementById("G#5").style.background = '#777';
             document.getElementById("A#5").style.background = '#777';
-            
+
         }
-             
+
     </script>
 
 </body>
+
+/* add a toggle button for ipad - to clear */
 
 </html>
