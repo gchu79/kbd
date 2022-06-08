@@ -242,7 +242,66 @@
             text-align: center;
 
             font-size: 15px;
-        }        
+        }  
+        
+        .key9 {
+            top: 50px;
+            height: 12%;
+            line-height: 40px;
+            width: 80px;
+            float: left;
+            position: relative;
+            background: white;
+            overflow: visible;
+
+            text-align: end;
+
+            font-size: 20px;
+        }   
+        
+        .key9a {
+            top: 50px;
+            height: 4%;
+            line-height: 40px;
+            width: 80px;
+            float: left;
+            position: relative;
+            background: white;
+            overflow: visible;
+
+            text-align: end;
+
+            font-size: 20px;
+        }      
+        
+        .key9b {
+            top: 50px;
+            height: 10%;
+            line-height: 40px;
+            width: 80px;
+            float: left;
+            position: relative;
+            background: white;
+            overflow: visible;
+
+            text-align: end;
+
+            font-size: 20px;
+        }   
+
+        .key9c {
+            top: 50px;
+            height: 10%;
+            width: 80px;
+            float: left;
+            position: relative;
+            background: white;
+            overflow: visible;
+
+            text-align: end;
+
+            font-size: 12px;
+        }         
 
         #container {
             position: absolute;
@@ -262,6 +321,17 @@
 
             height: 430px;
         }
+        
+        #container3 { 
+            /* descriptor */
+            position: absolute;
+            top: 260px;
+            width: 100px;
+            left: calc(50% - 500px);
+
+            
+            height: 430px;
+        }
 
     </style>
 
@@ -273,6 +343,9 @@
     </div>
 
     <div id='container2'> /* chord container */
+    </div>
+    
+    <div id='container3'> 
     </div>
 
     <script>
@@ -290,6 +363,7 @@
         var blackkey = ['C#', 'Db', 'D#', 'Eb', 'F#', 'Gb', 'G#', 'Ab', 'A#', 'Bb'];
         var html = "";
         var html1 = "";
+        var html2 = "";
 
         /* create keyboard */
 
@@ -315,7 +389,7 @@
         
         /* create chord */
 
-        html1 += "<div>Select Key</div>";
+        html1 += "<div>Select Sharp/Flat, Key, Chord - Selected Option is shown in Yellow </div>";
         
         /* #, b selection */
 
@@ -350,19 +424,18 @@
 
         html1 += `<div class='key4' id='selected2'></div>`;
 
-
+        
 /* chord section */
         
-        for (var i = 0; i < 3; i++) {
+        for (var i = 2; i > -1; i--) {
             for (var j = 0; j < 7; j++) {
                 if (i == 0) {
-                    html1 += `<div class='key5a' id=${i}${j}></div>`;
+                    html1 += `<div class='key5a' id=${i}${j} onmousedown='keyIntDownM(this)' onmouseup='keyIntUpM(this)' data-int='${j}'></div>`;
                 } else {
                     html1 += `<div class='key5' id=${i}${j}></div>`;
                 }
             }
         }
-
 
 /* interval names */
 
@@ -384,6 +457,24 @@
 
         document.getElementById('selected').innerHTML = "C";
         document.getElementById('selected2').innerHTML = "Major";
+        
+/* descriptor section */
+        
+
+            html2 += `<div class='key9'>select</div>`;
+            html2 += `<div class='key9'>select</div>`;
+            html2 += `<div class='key9'>select</div>`;
+            html2 += `<div class='key9a'></div>`;
+            html2 += `<div class='key9b'>5th</div>`;
+            html2 += `<div class='key9b'>3rd</div>`;
+            html2 += `<div class='key9b'>1st</div>`;
+            html2 += `<div class='key9b'>Interval</div>`;
+            html2 += `<div class='key9c'>Set to Touch Screen for IPAD</div>`;        
+   
+        
+        document.getElementById('container3').innerHTML = html2;        
+        
+        buildChord();
 
 /* function section */
         
@@ -615,6 +706,59 @@
             event.stopPropagation();
             
         }
+        
+
+        function keyIntDownM(elem) {
+            var int = elem.dataset.int;
+            varInt = int;
+            
+    /*        window.alert(elem.dataset.int); */
+
+            Grid1 = '' + 0 + varInt
+            Grid2 = '' + 1 + varInt
+            Grid3 = '' + 2 + varInt
+
+            Note1 = document.getElementById(Grid1).innerHTML;
+            Note2 = document.getElementById(Grid2).innerHTML;
+            Note3 = document.getElementById(Grid3).innerHTML;
+
+            if (document.getElementById('keyselected').innerHTML == "b") {
+                Note1 = keys[keyf.indexOf(Note1)];
+                Note2 = keys[keyf.indexOf(Note2)];
+                Note3 = keys[keyf.indexOf(Note3)];
+            }
+
+            A1 = Note1.substr(0, 1).codePointAt(0);
+            A2 = Note2.substr(0, 1).codePointAt(0);
+            A3 = Note3.substr(0, 1).codePointAt(0);
+            
+            P1 = keys.indexOf(Note1);
+            P2 = keys.indexOf(Note2);
+            P3 = keys.indexOf(Note3);
+            
+            if (P2 < P1) {
+                Note2 = Note2 + 5;
+            } else {
+                Note2 = Note2 + 4;
+            }
+
+            if (P3 < P1) {
+                Note3 = Note3 + 5;
+            } else {
+                Note3 = Note3 + 4;
+            }
+
+            Note1 = Note1 + 4;
+            
+            document.getElementById(Note1).style.background = "red";
+            document.getElementById(Note2).style.background = "red";
+            document.getElementById(Note3).style.background = "red";
+
+            synth.triggerAttackRelease([Note1,Note2,Note3], "16n");
+            event.stopPropagation();
+            
+        }        
+        
 
         function keyIntUp(elem) {
 
@@ -638,6 +782,33 @@
                 document.getElementById("A#5").style.background = '#777';
             }
         }
+        
+        
+        
+        
+        function keyIntUpM(elem) {
+
+            if (document.getElementById('toggle').innerHTML == "Mouse Click") {
+                for (var i = 0; i < 7; i++) {
+                    whiteNote = data[i] + 4;
+                    document.getElementById(whiteNote).style.background = "white";
+                    whiteNote = data[i] + 5;
+                    document.getElementById(whiteNote).style.background = "white";
+                }
+
+                
+                document.getElementById("C#4").style.background = '#777';
+                document.getElementById("D#4").style.background = '#777';
+                document.getElementById("F#4").style.background = '#777';
+                document.getElementById("G#4").style.background = '#777';
+                document.getElementById("A#4").style.background = '#777';
+                document.getElementById("C#5").style.background = '#777';
+                document.getElementById("D#5").style.background = '#777';
+                document.getElementById("F#5").style.background = '#777';
+                document.getElementById("G#5").style.background = '#777';
+                document.getElementById("A#5").style.background = '#777';
+            }
+        }        
         
         function keyIntUpClear (elem) {
 
@@ -681,7 +852,7 @@
 </body>
 
 <footer>
-<br />Play the keyboard or Select Key to generate the chord structure. Click on 'Unison' row to see/listen to the chord. 05/18/2022 Rev A. 
+<br />Play the keyboard or Select Key to generate the chord structure. Click the 'red note' to listen to the chord. 06/08/2022 Rev B. 
 </footer>
 
 </html>
